@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """
 WebSockets client
 
@@ -9,17 +8,16 @@ so that no firewall edits are needed.
 
 The port number is arbitrary, as long as the server and client are on the same port all is well.
 
-Naturally, the server ws_server.py must be started before this client attempts to connect.
+Naturally, the server must be started before this client attempts to connect.
 """
 
+import websockets
+import zlib
 from pathlib import Path
 import argparse
 import asyncio
-import websockets
-import zlib
 
-
-async def client(port: int, addr: str, max_packets: int, log_file: Path):
+async def main(port: int, addr: str, max_packets: int, log_file: Path = None):
     """
 
     Parameters
@@ -36,8 +34,11 @@ async def client(port: int, addr: str, max_packets: int, log_file: Path):
         where to store the data received (student must add code for this)
     """
 
-    log_file = Path(log_file).expanduser()
-
+    if log_file:
+        log_file = Path(log_file).expanduser()
+        
+       
+        
     uri = f"ws://{addr}:{port}"
 
     async with websockets.connect(uri) as websocket:
@@ -46,17 +47,21 @@ async def client(port: int, addr: str, max_packets: int, log_file: Path):
             print(zlib.decompress(qb).decode("utf8"))
         else:
             print(qb)
-
+        log = open("json.txt","w")
         for i in range(max_packets):
             data = await websocket.recv()
             if i % 5 == 0:
-                print(f"{i} total messages received")
+                pass
+                # print(f"{i} total messages received")
             print(data)
+            log.write(data + "\n")
+            log.flush()
+    log.close()
 
-
-if __name__ == "__main__":
+def cli():
+    
     p = argparse.ArgumentParser(description="WebSocket client")
-    p.add_argument("log_file", help="file to log JSON data")
+    p.add_argument("-l", "--log", help="file to log JSON data")
     p.add_argument("-host", help="Host address", default="localhost")
     p.add_argument("-port", help="network port", type=int, default=8765)
     p.add_argument(
@@ -66,8 +71,15 @@ if __name__ == "__main__":
         default=100000,
     )
     P = p.parse_args()
-
+    
+    
+   
     try:
-        asyncio.run(client(P.port, P.host, P.max_packets, P.log_file))
+        asyncio.run(main(P.port, P.host, P.max_packets, P.log))
     except KeyboardInterrupt:
-        print(P.log_file)
+        print(P.log)
+
+
+if __name__ == "__main__":
+    cli()
+
