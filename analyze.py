@@ -31,8 +31,7 @@ def load_data(file: Path) -> T.Dict[str, pandas.DataFrame]:
             r = json.loads(line)
             room = list(r.keys())[0]
             time = datetime.fromisoformat(r[room]["time"])
-            #print(room)
-            #print(time)
+            
 
             temperature[time] = {room: r[room]["temperature"][0]}
             occupancy[time] = {room: r[room]["occupancy"][0]}
@@ -81,9 +80,7 @@ if __name__ == "__main__":
                 counter_class +=1
     #stats=pandas.DataFrame()
     for k in data:
-        #t = data["occupancy"]
-        #print(t)
-        #data[k].plot()
+        
         if k == 'temperature':
             print('Temperature Median is:')
             print(data[k].median())
@@ -134,15 +131,13 @@ if __name__ == "__main__":
             print('filtered mean class :', temp_class1.median())
             print('filtered variance class :', temp_class1.var())
 
-            #good5 = data['temperature'].class1 > lower_bound_class
-            #temp_class2 = data['temperature'].class1[good5]
-            #print('class data', temp_class2)
+           
 
             
        
    
 
-            #print(data[k]["office"])
+            
             """  print("here is what : \n")
             print(data[k].std().office)
             print("here is what2 : \n")
@@ -175,17 +170,14 @@ if __name__ == "__main__":
         else:
             data[k].plot.kde()
             plt.title('Co2 probability density function')
-       # print("here are the time data:")
-        #print(data['temperature'].index[1:]) 
-        #print("here are the time data   :")
-        #print(data['temperature'].index[:-1]) 
-
+       
+    
     time_diffrence = data['temperature'].index[1:] - data['temperature'].index[:-1]
-    #print(time_diffrence)
+    
     time = [t.total_seconds() for t in time_diffrence]
-    #print(time)
+   
     time_series = pandas.Series(time)
-    #print(time_series)
+    
     time_median = time_series.median()
     time_mean = time_series.mean()
     time_variation = time_series.var()
