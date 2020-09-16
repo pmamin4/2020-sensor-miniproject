@@ -1,5 +1,4 @@
 The report file is on Hussain's account. 
 my partner is Hussain Albayat.
 We used the data(mean,median,and variances) that was on the data.txt file.
-Our analyze.py and client.py files are close to the same, but different names of variables.
 My text file is the "json.txt" file. 
