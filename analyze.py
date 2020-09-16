@@ -106,7 +106,6 @@ if __name__ == "__main__":
             print("the lower bound in lab1 is : "  , lower_bound_lab)
             print("the upper bound in lab1 is : "  , upper_bound_lab)
 
-            #for x in range(len(data['temperature'])):
                 
             good = (data['temperature'].office < upper_bound_office) & (data['temperature'].office > lower_bound_office)
             temp_office = data['temperature'].office[good]
@@ -114,9 +113,7 @@ if __name__ == "__main__":
             print(temp_office.size)
             
             
-            #good1 = data['temperature'].office > lower_bound_office and data['temperature'].lab1 < upper_bound_office
-            #temp_office1 = data['temperature'].office[good1]
-            #print("office data", temp_office)
+           
             
             good2 = (data['temperature'].lab1 < upper_bound_lab) & (data['temperature'].lab1 > lower_bound_lab)
             temp_lab1 = data['temperature'].lab1[good2]
@@ -124,9 +121,7 @@ if __name__ == "__main__":
             print(temp_lab1.size)
             
             
-            #good3 = data['temperature'].lab1 > lower_bound_lab and data['temperature'].class1 < upper_bound_lab
-            #temp_lab1 = data['temperature'].lab1[good3]
-            #print('lab data', temp_lab2)
+           
             
             good4 = (data['temperature'].class1 < upper_bound_class) & (data['temperature'].class1 > lower_bound_class)
             temp_class1 = data['temperature'].class1[good4]
