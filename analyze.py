@@ -25,7 +25,7 @@ def load_data(file: Path) -> T.Dict[str, pandas.DataFrame]:
     occupancy = {}
     co2 = {}
 
-    """with open('file', "r") as f:"""
+    
     with open('json.txt', "r") as f:
         for line in f:
             r = json.loads(line)
@@ -51,34 +51,34 @@ if __name__ == "__main__":
     p.add_argument("file", help="path to JSON data file")
     P = p.parse_args()
 
-    """file = Path(P.file).expanduser()"""
+    
     file = "log.txt"
 
     data = load_data(file)
-    #print(data)
+    
     counter_office = 0
     counter_class = 0
     counter_lab = 0
     number_of_data_office = len(data['temperature'].office)
     number_of_data_class = len(data['temperature'].class1)
     number_of_data_lab = len(data['temperature'].lab1)
-    #print(numer_of_data)
+    
     for x in range(len(data['temperature'])):
         if(not(math.isnan(data['temperature'].office[x]))):
-            #print(data['temperature'].office[x])
+            
             if(abs(data['temperature'].office[x]-data['temperature'].median().office)>= 2 * data['temperature'].std().office):
                 counter_office +=1
     for x in range(len(data['temperature'])):
         if(not(math.isnan(data['temperature'].lab1[x]))):
-            #print(data['temperature'].office[x])
+            
             if(abs(data['temperature'].lab1[x]-data['temperature'].median().lab1)>= 2 * data['temperature'].std().lab1):
                 counter_lab +=1
     for x in range(len(data['temperature'])):
         if(not(math.isnan(data['temperature'].class1[x]))):
-            #print(data['temperature'].office[x])
+            
             if(abs(data['temperature'].class1[x]-data['temperature'].median().class1)>= 2 * data['temperature'].std().class1):
                 counter_class +=1
-    #stats=pandas.DataFrame()
+    
     for k in data:
         
         if k == 'temperature':
@@ -103,6 +103,7 @@ if __name__ == "__main__":
             print("the lower bound in lab1 is : "  , lower_bound_lab)
             print("the upper bound in lab1 is : "  , upper_bound_lab)
 
+            
                 
             good = (data['temperature'].office < upper_bound_office) & (data['temperature'].office > lower_bound_office)
             temp_office = data['temperature'].office[good]
@@ -110,7 +111,7 @@ if __name__ == "__main__":
             print(temp_office.size)
             
             
-           
+            
             
             good2 = (data['temperature'].lab1 < upper_bound_lab) & (data['temperature'].lab1 > lower_bound_lab)
             temp_lab1 = data['temperature'].lab1[good2]
@@ -118,26 +119,20 @@ if __name__ == "__main__":
             print(temp_lab1.size)
             
             
-           
+            
             
             good4 = (data['temperature'].class1 < upper_bound_class) & (data['temperature'].class1 > lower_bound_class)
             temp_class1 = data['temperature'].class1[good4]
             print('class data' , temp_class1)
             print(temp_class1.size)
-            print('filtered mean office :', temp_office.median())
-            print('filtered variance office :', temp_office.var())
-            print('filtered mean lab :', temp_lab1.median())
-            print('filtered variance lab :', temp_lab1.var())
-            print('filtered mean class :', temp_class1.median())
-            print('filtered variance class :', temp_class1.var())
+            print('filtered mean temperature office :', temp_office.median())
+            print('filtered variance temperature office :', temp_office.var())
+            print('filtered mean temperature lab :', temp_lab1.median())
+            print('filtered variance temperature lab :', temp_lab1.var())
+            print('filtered mean temperature class :', temp_class1.median())
+            print('filtered variance temperature class :', temp_class1.var())
 
-           
 
-            
-       
-   
-
-            
             """  print("here is what : \n")
             print(data[k].std().office)
             print("here is what2 : \n")
@@ -170,12 +165,12 @@ if __name__ == "__main__":
         else:
             data[k].plot.kde()
             plt.title('Co2 probability density function')
-       
-    
+        
+
     time_diffrence = data['temperature'].index[1:] - data['temperature'].index[:-1]
     
     time = [t.total_seconds() for t in time_diffrence]
-   
+    
     time_series = pandas.Series(time)
     
     time_median = time_series.median()
@@ -197,3 +192,4 @@ if __name__ == "__main__":
     print("there are ", 100 - percentage_lab, " % bad data in lab1")
     print("there are ", 100 - percentage_office, " % bad data in office")
     plt.show()
+
