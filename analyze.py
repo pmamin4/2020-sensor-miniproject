@@ -157,13 +157,13 @@ if __name__ == "__main__":
         plt.xlabel("Time (seconds)")
         """
         if k == 'temperature':
-            data[k].plot.kde()
+            data[k].plot.hist()
             plt.title('Temperature probability density function')
         elif k == 'occupancy':
-            data[k].plot.kde()
+            data[k].plot.hist()
             plt.title('Occupancy probability density function')
         else:
-            data[k].plot.kde()
+            data[k].plot.hist()
             plt.title('Co2 probability density function')
         
 
@@ -182,7 +182,7 @@ if __name__ == "__main__":
     print("Time variation is : ", time_variation)
     print("Time standard deviation is : ", time_standard_deviation)
     plt.figure()
-    time_series.plot.kde()
+    time_series.plot.hist()
     plt.title("Time interval probability density function")
         
     percentage_class =  (number_of_data_class-counter_class)/(number_of_data_class) * 100  
